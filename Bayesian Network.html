@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bayesian Network Algorithm</title>
+    <style>
+        body {
+            font-family: "calibri", Arial, sans-serif;
+        }
+        .container {
+            display: block;
+            margin-top: 50px;
+            text-align: center;
+        }
+        table {
+            margin: auto;
+            font-size: 16px;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 10px;
+        }
+        input.btn {
+            color: silver;
+            background: black;
+            border: 0px outset black;
+            font-size: 14px;
+            font-weight: bold;
+            width: auto;
+        }
+        b {
+            font-size: 18px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Form Pertama -->
+    <form id="Bayesian" name="bayesian" method="post" action="">
+        <table width="500">
+            <tr>
+                <td width="178"><b>Rata-rata Orang yang Suka Animasi</b></td>
+                <td><input name="animasi" type="number" step="0.01" id="animasi" placeholder="0 - 1"></td>
+            </tr>
+            <tr>
+                <td width="178"><b>Rata-rata Orang yang Suka Game</b></td>
+                <td><input name="game" type="number" step="0.01" id="game" placeholder="0 - 1"></td>
+            </tr>
+        </table>
+        <p>
+            <input name="cari" type="button" id="cari" value="Hitung" class="btn" onclick="kemungkinan()" />
+        </p>
+    </form>
+</div>
+
+<div class="container">
+    <!-- Form Kedua -->
+    <form id="Hasil" name="hasil" method="post" action="">
+        <table>
+            <tr>
+                <td width="178"><b>Rata-rata Orang yang Tidak Suka Animasi</b></td>
+                <td><output id="notA"></output></td> 
+            </tr>
+            <tr>
+                <td width="178"><b>Rata-rata Orang yang Tidak Suka Game</b></td>
+                <td><output id="notG"></output></td> 
+            </tr>
+            <tr>
+                <td width="178"><b>Probabilitas Orang yang Suka Animasi Tetapi Tidak Suka Game</b></td> 
+                <td><output id="AnotG"></output></td>
+            </tr>
+            <tr>
+                <td width="178"><b>Probabilitas Orang yang Suka Game Tetapi Tidak Suka Animasi</b></td> 
+                <td><output id="GnotA"></output></td>
+            </tr>
+            <tr>
+                <td width="178"><b>Probabilitas Orang yang Tidak Suka Animasi dan Game</b></td> 
+                <td><output id="notAG"></output></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script>
+    function kemungkinan() {
+        // Ambil nilai input
+        let animasi = parseFloat(document.getElementById('animasi').value);
+        let game = parseFloat(document.getElementById('game').value);
+
+        // Validasi input
+        if (isNaN(animasi) || isNaN(game) || animasi < 0 || animasi > 1 || game < 0 || game > 1) {
+            alert('Masukkan nilai antara 0 hingga 1 untuk kedua input.');
+            return;
+        }
+
+        // Hitung probabilitas
+        let notA = 1 - animasi;
+        let notG = 1 - game;
+        let AnotG = animasi * notG;
+        let GnotA = game * notA;
+        let notAG = notA * notG;
+
+        // Tampilkan hasil
+        document.getElementById('notA').innerHTML = notA.toFixed(2);
+        document.getElementById('notG').innerHTML = notG.toFixed(2);
+        document.getElementById('AnotG').innerHTML = AnotG.toFixed(2);
+        document.getElementById('GnotA').innerHTML = GnotA.toFixed(2);
+        document.getElementById('notAG').innerHTML = notAG.toFixed(2);
+    }
+</script>
+</body>
+</html>
